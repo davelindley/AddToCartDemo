@@ -25,6 +25,7 @@
         name: "MenuGrid",
         data(){
           return{
+              //The menu data - this could be read in from your API as a method which is called on mount
               menu_data:[
                   {'name':'Grilled Chicken Sandwich', 'price':10.00, 'quantity':0},
                   {'name':'Spicy Chicken Sandwich', 'price':10.00, 'quantity':0},
@@ -60,7 +61,6 @@
             //function for increasing the quantity of an item
             increment(index){
                 this.menu_data[index]['quantity'] ++
-                console.log(this.menu_data[index])
             },
             submit(){
                 alert('Order Submitted! - check console for details')
