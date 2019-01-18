@@ -1,18 +1,22 @@
 <template>
     <div>
+        <h1>Menu</h1>
         <ul>
             <li v-for="(menu_item,index) in menu_data" :key="menu_item.name">
                 <button @click="increment(index)">  {{menu_item.name}}</button>
                 <br><br>
             </li>
         </ul>
-        <hr><hr>
+        <hr>
+        <h1>Cart</h1>
         <ul>
             <li v-for="item in cart">
                 <div v-if="item.quantity > 0">{{item.name}} X {{item.quantity}} = ${{item.extended_price}}
                     </div>
             </li>
         </ul>
+        <hr>
+        <button @click="submit">Submit Order</button>
     </div>
 </template>
 
@@ -30,6 +34,7 @@
           }
         },
         computed:{
+            //creating a computed cart array which looks for any items in the menu with quantity of greater than 0
             cart(){
                 var temp_cart = []
                 for (var menu_item in this.menu_data){
@@ -52,9 +57,14 @@
         },
 
         methods:{
+            //function for increasing the quantity of an item
             increment(index){
                 this.menu_data[index]['quantity'] ++
                 console.log(this.menu_data[index])
+            },
+            submit(){
+                alert('Order Submitted! - check console for details')
+                console.log(this.menu_data)
             }
         }
     }
