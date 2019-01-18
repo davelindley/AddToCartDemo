@@ -1,6 +1,8 @@
 <template>
     <div>
         <h1>Menu</h1>
+
+        <!--Create a loop for the menu data to be read in an populated into the template-->
         <ul>
             <li v-for="(menu_item,index) in menu_data" :key="menu_item.name">
                 <button @click="increment(index)">  {{menu_item.name}}</button>
@@ -9,6 +11,8 @@
         </ul>
         <hr>
         <h1>Cart</h1>
+
+        <!--The cart is computed and only contains items where quantity is greater than 0-->
         <ul>
             <li v-for="item in cart">
                 <div v-if="item.quantity > 0">{{item.name}} X {{item.quantity}} = ${{item.extended_price}}
@@ -16,6 +20,8 @@
             </li>
         </ul>
         <hr>
+
+        <!--Once the cart has been created the order can be submitted, this is when it should hit the server-->
         <button @click="submit">Submit Order</button>
     </div>
 </template>
