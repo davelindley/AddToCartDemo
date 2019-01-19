@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Single Page Add to Cart</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+<div>
+        <h1>Menu</h1>
+
+        <!--Create a loop for the menu data to be read in an populated into the template-->
+        <ul>
+            <li v-for="(menu_item,index) in menu_data" :key="menu_item.name">
+                <button @click="increment(index)">  {{menu_item.name}}</button>
+                <br><br>
+            </li>
+        </ul>
+        <hr>
+        <h1>Cart</h1>
+
+        <!--The cart is computed and only contains items where quantity is greater than 0-->
+        <ul>
+            <li v-for="item in cart">
+                <div v-if="item.quantity > 0">{{item.name}} X {{item.quantity}} = ${{item.extended_price}}
+                    </div>
+            </li>
+        </ul>
+        <hr>
+
+        <!--Once the cart has been created the order can be submitted, this is when it should hit the server-->
+        <button @click="submit">Submit Order</button>
+    </div>
+</div>
+</body>
+<script>
+var app = new Vue({
+  el: '#app',
+        data(){
+          return{
+              //The menu data - this could be read in from your API as a method which is called on mount
+              menu_data:[
+                  {'name':'Grilled Chicken Sandwich', 'price':10.00, 'quantity':0},
+                  {'name':'Spicy Chicken Sandwich', 'price':10.00, 'quantity':0},
+                  {'name':'Lloyds Meatloaf', 'price':10.00, 'quantity':0},
+                  {'name':'Dustins  Vege Burger', 'price':10.00, 'quantity':0},
+              ]
+          }
+        },
+        computed:{
+            //creating a computed cart array which looks for any items in the menu with quantity of greater than 0
+            cart(){
+                var temp_cart = []
+                for (var menu_item in this.menu_data){
+
+                        let item_with_price ={
+                            'name': this.menu_data[menu_item]['name'],
+                            'quantity': this.menu_data[menu_item]['quantity'],
+                            'extended_price': this.menu_data[menu_item]['price'] * this.menu_data[menu_item]['quantity']
+                            }
+
+                        if (item_with_price['quantity'] > 0){
+                            temp_cart.push(item_with_price)
+                        }
+
+                        }
+                return temp_cart
+
+            }
+
+        },
+
+        methods:{
+            //function for increasing the quantity of an item
+            increment(index){
+                this.menu_data[index]['quantity'] ++
+            },
+            submit(){
+                alert('Order Submitted! - check console for details')
+                console.log(this.menu_data)
+            }
+        }
+    })
+
+</script>
+</html>
